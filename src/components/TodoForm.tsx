@@ -40,8 +40,8 @@ const TodoForm = () => {
       isDone: false,
     };
     addTodo(nextTodo);
-    formData.delete("title");
 
+    //폼리셋시키는방법무엇일까
     // setTitle("");
     // setContent("");
     // setDeadline("");

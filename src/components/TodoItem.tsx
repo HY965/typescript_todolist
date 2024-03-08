@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { useTodoStore } from "../shared/store";
 import { Todo } from "../types/todo-type";
 
+interface TodoCardProps {
+  $isDone: boolean;
+}
+
 const TodoItem = ({ todo }: { todo: Todo }) => {
-  const { deleteTodo } = useTodoStore();
+  const { deleteTodo, toggleTodo } = useTodoStore();
 
   const newDate = new Date(todo.deadline).toLocaleDateString("Ko-KR", {
     year: "numeric",
@@ -21,19 +25,21 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
     }
   };
 
-  // const onClickToggleItem = () => {
-  //   toggleTodo(todo.id, todo);
-  // };
+  const onClickToggleItem = () => {
+    toggleTodo(todo.id);
+  };
 
   return (
     <CardWrapper>
-      <TextContent>
+      <TextContent $isDone={todo.isDone}>
         <h3>{todo.title}</h3>
         <p>{todo.content}</p>
         <time>{newDate}</time>
       </TextContent>
       <BtnSet>
-        <CompleteBtn>{todo.isDone ? "취소" : "완료"}</CompleteBtn>
+        <CompleteBtn onClick={onClickToggleItem}>
+          {todo.isDone ? "취소" : "완료"}
+        </CompleteBtn>
         <DeleteBtn onClick={handleDeleteTodoItem}>삭제</DeleteBtn>
       </BtnSet>
     </CardWrapper>
@@ -42,12 +48,13 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
 
 export default TodoItem;
 
-const TextContent = styled.article`
+const TextContent = styled.article<TodoCardProps>`
   flex-grow: 1;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  text-decoration: ${({ $isDone }) => ($isDone ? "line-through" : "none")};
 `;
 
 const CardWrapper = styled.div`
