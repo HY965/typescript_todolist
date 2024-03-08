@@ -6,14 +6,12 @@ import styled from "styled-components";
 
 const Home = () => {
   const { fetchTodos, setTodos, todos } = useTodoStore();
+  console.log("todo1", todos);
   const [sortOrder, setSortOrder] = useState("asc");
 
   const sortOrderHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value);
   };
-  useEffect(() => {
-    fetchTodos();
-  }, [fetchTodos]);
 
   useEffect(() => {
     if (sortOrder === "asc") {
@@ -32,6 +30,10 @@ const Home = () => {
       );
     }
   }, [sortOrder, setTodos]);
+
+  useEffect(() => {
+    fetchTodos();
+  }, [fetchTodos]);
 
   return (
     <main>
