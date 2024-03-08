@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { addTodo, deleteTodo, getTodos } from "../api/todo-api";
+import { addTodo, deleteTodo, getTodos, updateTodo } from "../api/todo-api";
 import { Todo } from "../types/todo-type";
-// import { devtools, persist } from "zustand/middleware";
+// import { immer } from "zustand/middleware/immer";
 
 interface TodoState {
   todos: Todo[];
@@ -29,10 +29,11 @@ export const useTodoStore = create<TodoState>((set) => ({
       todos: state.todos.filter((todo) => todo.id !== deleteTodos),
     }));
   },
-  toggleTodo: async (id: string) => {
+  toggleTodo: async (id: string, todo: Todo) => {
+    const update = await updateTodo(id, todo);
     set((state) => ({
       todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+        todo.id === update ? { ...todo, isDone: !todo.isDone } : todo
       ),
     }));
   },

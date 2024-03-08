@@ -5,8 +5,7 @@ import { useTodoStore } from "../shared/store";
 import styled from "styled-components";
 
 const Home = () => {
-  const { fetchTodos, setTodos } = useTodoStore();
-  const todos = useTodoStore((state) => state.todos);
+  const { fetchTodos, setTodos, todos } = useTodoStore();
   const [sortOrder, setSortOrder] = useState("asc");
 
   const sortOrderHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
